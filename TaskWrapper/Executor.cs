@@ -15,27 +15,40 @@ public class Executor
 
     public Executor(string path, string arguments)
     {
+        Path = path;
         process = new Process();
         Arguments = arguments;
         Logging = new Queue<string>(300);
+        Compile();
         
     }
 
     private void Compile()
     {
-        process.StartInfo.FileName = new ExtensionExtractor(Path).Extract();
+        ProcessStartInfo startInfo = new ProcessStartInfo();
+        //process.StartInfo.FileName = new ExtensionExtractor(Path).Extract();
+        startInfo.FileName = new ExtensionExtractor(Path).Extract();
         if (Arguments != "")
         {
-        process.StartInfo.Arguments = Arguments+" "+Path;
+            startInfo.Arguments = Arguments+" "+Path;
+            //process.StartInfo.Arguments = Arguments+" "+Path;
         }
         else
         {
-            process.StartInfo.Arguments = Path;
+            startInfo.Arguments = Path;
+            //process.StartInfo.Arguments = Path;
         }
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.CreateNoWindow = true;
+        startInfo.WorkingDirectory = System.IO.Path.GetDirectoryName(Path);
+        startInfo.CreateNoWindow = false;
+        startInfo.UseShellExecute = false;
+        startInfo.RedirectStandardOutput = true;
+        startInfo.RedirectStandardError = true;
+        
+        // process.StartInfo.UseShellExecute = false;
+        // process.StartInfo.RedirectStandardOutput = true;
+        // process.StartInfo.RedirectStandardError = true;
+        // process.StartInfo.CreateNoWindow = true;
+        process.StartInfo = startInfo;
         process.OutputDataReceived += (sender, e) => HandleOutput(e.Data);
         process.ErrorDataReceived += (sender, e) => HandleError(e.Data);
     }
@@ -63,6 +76,30 @@ public class Executor
             }
             Logging.Enqueue("Errore: " + output); 
         }
+    }
+
+    public bool Run()
+    {
+        try
+        {
+            process.Start();
+            process.BeginOutputReadLine(); 
+            process.BeginErrorReadLine();
+
+            process.WaitForExit();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore durante l'avvio del processo: " + ex.Message);
+            return false;
+        }
+        
+    }
+
+    public string Log()
+    {
+        return string.Join("\n", Logging);
     }
 
 }

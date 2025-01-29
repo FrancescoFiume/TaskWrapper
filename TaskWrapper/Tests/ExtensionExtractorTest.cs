@@ -5,10 +5,10 @@ namespace TaskWrapper.Tests;
 public class ExtensionExtractorTest
 {
     [Theory]
-    [InlineData("file.sh", "bash ")]
-    [InlineData("file.cs", "dotnet run ")]
-    [InlineData("script.py", "python3 ")]
-    [InlineData("program.go", "go run ")]
+    [InlineData("file.sh", "bash")]
+    [InlineData("file.cs", "dotnet run")]
+    [InlineData("script.py", "python3")]
+    [InlineData("program.go", "go run")]
     public void Extract_ShouldReturnCorrectCommand_ForSupportedExtensions(string path, string expectedCommand)
     {
         // Arrange

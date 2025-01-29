@@ -17,14 +17,14 @@ public class ExtensionExtractor
         {
             case "sh" :
             {
-                return "bash ";
+                return "bash";
             }
             case "cs" :
-                return "dotnet run ";
+                return "dotnet run";
             case "py" :
-                return "python3 ";
+                return "python3";
             case "go":
-                return "go run ";
+                return "go run";
         }
         throw new Exception($"Extension {extension} is not supported");
     }
