@@ -3,26 +3,26 @@ using Xunit;
 public class ExecutorTest
 {
     [Fact]
-    public void ShouldReturnTrue_WhenProcessCompletes()
+    public async Task ShouldReturnTrue_WhenProcessCompletes()
     {
         string path = "/home/fiumef/PycharmProjects/es/file.py";
         string arguments = "";
         
         Executor executor = new Executor(path, arguments);
-        bool result = executor.Run();
+        bool result = await executor.Run();
 
         Assert.True(result);
 
     }
     [Fact]
-    public void Run_ShouldReturnFalse_WhenProcessFailsToStart()
+    public async Task Run_ShouldReturnFalse_WhenProcessFailsToStart()
     {
         
         string path = "nonexistent.py"; 
         string arguments = "";
         var executor = new Executor(path, arguments);
         
-        bool result = executor.Run();
+        bool result = await  executor.Run();
         
         Assert.False(result);
     }

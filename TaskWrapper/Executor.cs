@@ -31,23 +31,17 @@ public class Executor
         if (Arguments != "")
         {
             startInfo.Arguments = Arguments+" "+Path;
-            //process.StartInfo.Arguments = Arguments+" "+Path;
         }
         else
         {
             startInfo.Arguments = Path;
-            //process.StartInfo.Arguments = Path;
+            
         }
         startInfo.WorkingDirectory = System.IO.Path.GetDirectoryName(Path);
         startInfo.CreateNoWindow = false;
         startInfo.UseShellExecute = false;
         startInfo.RedirectStandardOutput = true;
         startInfo.RedirectStandardError = true;
-        
-        // process.StartInfo.UseShellExecute = false;
-        // process.StartInfo.RedirectStandardOutput = true;
-        // process.StartInfo.RedirectStandardError = true;
-        // process.StartInfo.CreateNoWindow = true;
         process.StartInfo = startInfo;
         process.OutputDataReceived += (sender, e) => HandleOutput(e.Data);
         process.ErrorDataReceived += (sender, e) => HandleError(e.Data);
@@ -78,7 +72,7 @@ public class Executor
         }
     }
 
-    public bool Run()
+    public async Task<bool> Run()
     {
         try
         {
@@ -86,7 +80,7 @@ public class Executor
             process.BeginOutputReadLine(); 
             process.BeginErrorReadLine();
 
-            process.WaitForExit();
+            await process.WaitForExitAsync();
             return true;
         }
         catch (Exception ex)
