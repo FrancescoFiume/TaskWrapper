@@ -45,6 +45,7 @@ public class Router
             await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
             context.Response.OutputStream.Close();
         }
+        
     }
     
 }

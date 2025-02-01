@@ -29,6 +29,7 @@ public class WebServer
             _listener.Start();
             _router.AddRoute("GET","/creationTime/", CreationDatetimeAsync);
             _router.AddRoute("GET","/startTime/", StartDatetimeAsync);
+            _router.AddRoute("GET","/log/", LogAsync);
 
             while (true)
             {
@@ -61,6 +62,15 @@ public class WebServer
         {
             buffer = Encoding.UTF8.GetBytes("Task Hasn't Started");
         }
+        context.Response.ContentLength64 = buffer.Length;
+        context.Response.ContentType = "text/html";
+        await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+        context.Response.OutputStream.Close();
+    }
+    
+    public async Task LogAsync(HttpListenerContext context)
+    {
+        byte[] buffer = Encoding.UTF8.GetBytes(_wrapper.Log());
         context.Response.ContentLength64 = buffer.Length;
         context.Response.ContentType = "text/html";
         await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);

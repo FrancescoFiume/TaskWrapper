@@ -1,5 +1,7 @@
 ﻿
 using TaskWrapper;
 
-var task = new Wrapper("/home/ff/PycharmProjects/PythonProject/test.py", "", 1, true);
+string location = "/home/ff/PycharmProjects/PythonProject/test.py";
+//string location = "/home/ff/RiderProjects/PW_Gestione_Punti/Gestionale_Punti/Gestionale_Punti.csproj";
+var task = new Wrapper(location, "", 1, true);
 await task.Start();

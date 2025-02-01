@@ -5,7 +5,7 @@ public class ExecutorTest
     [Fact]
     public async Task ShouldReturnTrue_WhenProcessCompletes()
     {
-        string path = "/home/fiumef/PycharmProjects/es/file.py";
+        string path = "/home/ff/PycharmProjects/PythonProject/test.py";
         string arguments = "";
         
         Executor executor = new Executor(path, arguments);

@@ -40,5 +40,10 @@ public class Wrapper
       }
       
     }
+
+    public string Log()
+    {
+        return Executor.Log();
+    }
     
 }

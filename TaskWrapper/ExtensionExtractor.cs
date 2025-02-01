@@ -16,15 +16,13 @@ public class ExtensionExtractor
         switch (extension)
         {
             case "sh" :
-            {
-                return "bash";
-            }
-            case "cs" :
-                return "dotnet run";
+                return config.bashBin;
+            case "csproj" :
+                return config.dotnetBin;
             case "py" :
-                return "python3";
+                return config.pythonBin;
             case "go":
-                return "go run";
+                return config.goBin;
         }
         throw new Exception($"Extension {extension} is not supported");
     }
